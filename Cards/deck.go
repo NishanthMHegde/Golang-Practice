@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 //Go is not an object oriented programming language
 //Instead of creating a deck class, we create a deck 'type'
@@ -28,4 +32,20 @@ func newDeck() deck {
 		}
 	}
 	return cards
+}
+
+//function to deal cards of particular hand size. This function does not take receiver
+
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
+
+//convert deck of cards to string
+
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
+}
+
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 777)
 }

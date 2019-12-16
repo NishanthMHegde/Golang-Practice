@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//Since Go is statically typed, we need to declare variables along with data type as below
 	// var card string = "Ace of Spades"
@@ -17,11 +19,16 @@ func main() {
 
 	// fmt.Println(cards)
 	//let us iterate through the slice of cards
+	fmt.Println("Original Deck of cards")
 	cards.printDeck()
+	hand, remainingCards := deal(cards, 4)
+	fmt.Println("Hand \n\n\n")
+	hand.printDeck()
+	fmt.Println("Remaining cards \n\n\n")
+	remainingCards.printDeck()
 
-}
+	//to save deck of cards to file, we must first convert it to byte slice
+	//to convert to byte slice, we must first convert it to string slice and then to a , seperated string
+	cards.saveToFile("my_cards")
 
-//functions should also have a return type
-func newCard() string {
-	return "Ace of Spades"
 }
