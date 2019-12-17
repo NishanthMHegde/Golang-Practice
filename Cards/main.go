@@ -30,5 +30,15 @@ func main() {
 	//to save deck of cards to file, we must first convert it to byte slice
 	//to convert to byte slice, we must first convert it to string slice and then to a , seperated string
 	cards.saveToFile("my_cards")
+	fmt.Println("\n\n\n")
+	fmt.Println("Cards read from file are ")
+	read_cards := readFromFile("my_cards")
+	read_cards.printDeck()
+
+	fmt.Println("\n\n\n")
+
+	fmt.Println("Shuffled Deck is ")
+	cards = cards.shuffle()
+	cards.printDeck()
 
 }

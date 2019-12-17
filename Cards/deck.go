@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
+	"os"
 	"strings"
+	"time"
 )
 
 //Go is not an object oriented programming language
@@ -48,4 +51,27 @@ func (d deck) toString() string {
 
 func (d deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 777)
+}
+
+func readFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Critical error occurred: ", err)
+		os.Exit(1)
+	}
+	s := strings.Split(string(bs), ",")
+	return deck(s)
+}
+
+//shuffle the deck of cards by swapping positions of current index with random index within deck length
+func (d deck) shuffle() deck {
+
+	//seed the random object with current time in nanoseconds
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
+	return d
 }
